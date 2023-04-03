@@ -71,6 +71,7 @@ function handleMessage(sender_psid, received_message) {
     response = {
       text: `You sent the message: "${received_message.text}". Now send me an attachment!`,
     };
+    console.log("clgt 1-------------");
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
@@ -142,6 +143,7 @@ function callSendAPI(sender_psid, response) {
       json: request_body,
     },
     (err, res, body) => {
+      console.log("clgt-----------2");
       if (!err) {
         console.log("message sent!");
       } else {
