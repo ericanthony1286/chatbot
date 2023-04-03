@@ -8,6 +8,7 @@ require("dotenv").config();
 const app = express();
 
 // config view engine
+
 configViewEngine(app);
 
 // parse request to json

@@ -4,7 +4,7 @@ const request = require("request");
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 let getHomePage = (req, res) => {
-  return res.send("hello world");
+  return res.render("homepage");
 };
 
 let getWebhook = (req, res) => {
@@ -153,8 +153,36 @@ function callSendAPI(sender_psid, response) {
     }
   );
 }
+
+let setupProfile = async (req, res) => {
+  // call Facebook profile
+
+  let request_body = {
+    get_started: { payload: "GET_STARTED" },
+    whitelisted_domains: ["https://chatbotcake.onrender.com"],
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  await request(
+    {
+      uri: `https://graph.facebook.com/v16.0/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      if (!err) {
+        console.log("Setup user profile succeeds!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+  return res.send("Setup user profile succeeds!");
+};
 module.exports = {
   getHomePage: getHomePage,
   getWebhook: getWebhook,
   postWebhook: postWebhook,
+  setupProfile: setupProfile,
 };
