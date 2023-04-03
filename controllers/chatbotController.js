@@ -144,6 +144,7 @@ function callSendAPI(sender_psid, response) {
     },
     (err, res, body) => {
       console.log("clgt-----------2");
+      console.log(PAGE_ACCESS_TOKEN);
       if (!err) {
         console.log("message sent!");
       } else {
