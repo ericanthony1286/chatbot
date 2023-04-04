@@ -64,12 +64,16 @@ let postWebhook = (req, res) => {
         handlePostback(sender_psid, webhook_event.postback);
       } else if (webhook_event.changes) {
         webhook_event.changes.forEach((change) => {
-          if (change.field === 'feed') {
+          if (change.field === "feed") {
             let sender_id = change.value.from.id;
             let comment_id = change.value.comment_id;
             let comment_message = change.value.message;
-            console.log(`xxxxxxx----------------Received comment from sender ${sender_id} with ID ${comment_id}: ${comment_message}----------`);
+            console.log(
+              `xxxxxxxxx-----------------Received comment from sender ${sender_id} with ID ${comment_id}: ${comment_message}-----------`
+            );
           }
+        });
+      }
     });
     // Return a '200 OK' response to all requests
 
