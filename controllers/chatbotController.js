@@ -37,42 +37,20 @@ let postWebhook = (req, res) => {
     console.log("----------BBBBBBBB----------", body, "-------AAAAAAAAAA");
     body.entry.forEach(function (entry) {
       // Gets the body of the webhook event
-      console.log(entry, "------------1111111111111111111---------");
-      let webhook_event = entry.messaging[0];
-      console.log("-------222222222222222-----------", webhook_event);
 
       // Get the sender PSID
-      let sender_psid = webhook_event.sender.id;
-      console.log("Sender PSID: " + sender_psid);
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
-      console.log(
-        "--------mmmmmmm--------",
-        webhook_event.message,
-        "-----------mmmmmmmm-------"
-      );
-      console.log(
-        "---------jjjjjjjjjj-------",
-        entry.changes,
-        "---------jjjjjjjjjj-------"
-      );
-      if (webhook_event.message) {
-        console.log("clgt----------");
+
+      if (entry.messaging[0].message) {
+        let webhook_event = entry.messaging[0];
+        let sender_psid = webhook_event.sender.id;
         handleMessage(sender_psid, webhook_event.message);
-      } else if (webhook_event.postback) {
+      } else if (entry.messaging[0].postback) {
         handlePostback(sender_psid, webhook_event.postback);
-      } else if (webhook_event.changes) {
-        webhook_event.changes.forEach((change) => {
-          if (change.field === "feed") {
-            let sender_id = change.value.from.id;
-            let comment_id = change.value.comment_id;
-            let comment_message = change.value.message;
-            console.log(
-              `xxxxxxxxx-----------------Received comment from sender ${sender_id} with ID ${comment_id}: ${comment_message}-----------`
-            );
-          }
-        });
+      } else if (entry.changes) {
+        entry.changes.forEach((change) => console.log(change.value));
       }
     });
     // Return a '200 OK' response to all requests
