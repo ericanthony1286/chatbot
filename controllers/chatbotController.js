@@ -51,6 +51,21 @@ let postWebhook = (req, res) => {
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }
+
+      //// listen comments
+      const pageID = entry.id;
+      const timeOfEvent = entry.time;
+
+      // Iterate over each messaging event
+      entry.changes.forEach((change) => {
+        if (change.field === "feed") {
+          console.log("---------Page feed has been updated!");
+          // Handle the page feed update event here
+        } else if (change.field === "comments") {
+          console.log("--------New comment has been posted!");
+          // Handle the new comment event here
+        }
+      });
     });
     // Return a '200 OK' response to all requests
 
@@ -154,8 +169,6 @@ function callSendAPI(sender_psid, response) {
       json: request_body,
     },
     (err, res, body) => {
-      console.log("clgt-----------2");
-      console.log(PAGE_ACCESS_TOKEN);
       if (!err) {
         console.log("message sent!");
       } else {
