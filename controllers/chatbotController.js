@@ -47,6 +47,16 @@ let postWebhook = (req, res) => {
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
+      console.log(
+        "--------mmmmmmm--------",
+        webhook_event.message,
+        "-----------mmmmmmmm-------"
+      );
+      console.log(
+        "---------jjjjjjjjjj-------",
+        entry.changes,
+        "---------jjjjjjjjjj-------"
+      );
       if (webhook_event.message) {
         console.log("clgt----------");
         handleMessage(sender_psid, webhook_event.message);
