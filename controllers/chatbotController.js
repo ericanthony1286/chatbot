@@ -36,6 +36,7 @@ let postWebhook = (req, res) => {
     // Iterates over each entry - there may be mutiple if batched
     body.entry.forEach(function (entry) {
       // Gets the body of the webhook event
+      console.log(entry, 1111111111111111111);
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
 
@@ -57,15 +58,18 @@ let postWebhook = (req, res) => {
       const timeOfEvent = entry.time;
 
       // Iterate over each messaging event
-      entry.changes.forEach((change) => {
-        if (change.field === "feed") {
-          console.log("---------Page feed has been updated!");
-          // Handle the page feed update event here
-        } else if (change.field === "comments") {
-          console.log("--------New comment has been posted!");
-          // Handle the new comment event here
-        }
-      });
+      const changes = entry.changes;
+      if (changes) {
+        changes.forEach((change) => {
+          if (change.field === "feed") {
+            console.log("---------Page feed has been updated!");
+            // Handle the page feed update event here
+          } else if (change.field === "comments") {
+            console.log("--------New comment has been posted!");
+            // Handle the new comment event here
+          }
+        });
+      }
     });
     // Return a '200 OK' response to all requests
 
