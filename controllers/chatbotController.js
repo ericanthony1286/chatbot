@@ -34,6 +34,7 @@ let postWebhook = (req, res) => {
   // Check this is an event from a page subscription
   if (body.object === "page") {
     // Iterates over each entry - there may be mutiple if batched
+    console.log("----------BBBBBBBB----------", body, "-------AAAAAAAAAA");
     body.entry.forEach(function (entry) {
       // Gets the body of the webhook event
       console.log(entry, "------------1111111111111111111---------");
