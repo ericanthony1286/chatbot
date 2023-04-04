@@ -30,11 +30,9 @@ let getWebhook = (req, res) => {
 };
 let postWebhook = (req, res) => {
   let body = req.body;
-  console.log("------------Received webhook notification:--------------");
   // Check this is an event from a page subscription
   if (body.object === "page") {
     // Iterates over each entry - there may be mutiple if batched
-    console.log("----------BBBBBBBB----------", body, "-------AAAAAAAAAA");
     body.entry.forEach(function (entry) {
       // Gets the body of the webhook event
 
@@ -50,6 +48,7 @@ let postWebhook = (req, res) => {
       } else if (entry.messaging[0].postback) {
         handlePostback(sender_psid, webhook_event.postback);
       } else if (entry.changes) {
+        console.log("vvvvvvvvvvv---------");
         entry.changes.forEach((change) => console.log(change.value));
       }
     });
