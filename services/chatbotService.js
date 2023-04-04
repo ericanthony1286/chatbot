@@ -31,10 +31,33 @@ let callSendAPI = (sender_psid, response) => {
   );
 };
 
+let getUsername = (sender_psid) => {
+  return new Promise((resolve, reject) => {
+    request(
+      {
+        uri: `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`,
+
+        method: "GET",
+      },
+      (err, res, body) => {
+        if (!err) {
+          let userData = JSON.parse(body);
+          let username = `${userData.first_name} ${userData.last_name}`;
+          resolve(username);
+        } else {
+          console.error("Unable to send message:" + err);
+          reject(err);
+        }
+      }
+    );
+  });
+};
+
 let handleGetStarted = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let response = { text: "Ok, Welcome to our page." };
+      let username = await getUsername(sender_psid);
+      let response = { text: `Ok, Welcome ${username} to our page.` };
       await callSendAPI(sender_psid, response);
       resolve("done");
     } catch (err) {
