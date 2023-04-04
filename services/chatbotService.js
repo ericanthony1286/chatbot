@@ -1,8 +1,11 @@
 require("dotenv").config();
+const { response } = require("express");
 const request = require("request");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-////
+
+const IMAGE_GET_STARTED = "http://bit.ly/quang-bot1";
+
 let callSendAPI = (sender_psid, response) => {
   // Construct the message body
   let request_body = {
@@ -57,13 +60,54 @@ let handleGetStarted = (sender_psid) => {
   return new Promise(async (resolve, reject) => {
     try {
       let username = await getUsername(sender_psid);
-      let response = { text: `Ok, Welcome ${username} to our page.` };
-      await callSendAPI(sender_psid, response);
+      let response1 = { text: `Ok, Welcome ${username} to our page.` };
+
+      let response2 = sendGetStartedTemplate();
+
+      // send text message
+      await callSendAPI(sender_psid, response1);
+      // send generic template message
       resolve("done");
     } catch (err) {
       reject(err);
     }
   });
+};
+
+let sendGetStartedTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "Xin chao ban den  voi nha hang cua chung toi",
+            subtitle: "Duoi day la cac lua chon cua nha hang.",
+            image_url: IMAGE_GET_STARTED,
+            buttons: [
+              {
+                type: "postback",
+                title: "MENU CHINH",
+                payload: "MAIN_MENU",
+              },
+              {
+                type: "postback",
+                title: "DAT BAN",
+                payload: "RESERVED_TABLE",
+              },
+              {
+                type: "postback",
+                title: "HUONG DAN SU DUNG BOT",
+                payload: "GUI_TO_USE",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  return response;
 };
 module.exports = {
   handleGetStarted: handleGetStarted,
