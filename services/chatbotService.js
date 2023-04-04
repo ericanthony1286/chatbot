@@ -67,6 +67,7 @@ let handleGetStarted = (sender_psid) => {
       // send text message
       await callSendAPI(sender_psid, response1);
       // send generic template message
+      await callSendAPI(sender_psid, response2);
       resolve("done");
     } catch (err) {
       reject(err);
