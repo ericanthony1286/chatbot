@@ -62,25 +62,14 @@ let postWebhook = (req, res) => {
         handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
-      }
-
-      //// listen comments
-      const pageID = entry.id;
-      const timeOfEvent = entry.time;
-
-      // Iterate over each messaging event
-      const changes = entry.changes;
-      if (changes) {
-        changes.forEach((change) => {
-          if (change.field === "feed") {
-            console.log("---------Page feed has been updated!");
-            // Handle the page feed update event here
-          } else if (change.field === "comments") {
-            console.log("--------New comment has been posted!");
-            // Handle the new comment event here
+      } else if (webhook_event.changes) {
+        webhook_event.changes.forEach((change) => {
+          if (change.field === 'feed') {
+            let sender_id = change.value.from.id;
+            let comment_id = change.value.comment_id;
+            let comment_message = change.value.message;
+            console.log(`xxxxxxx----------------Received comment from sender ${sender_id} with ID ${comment_id}: ${comment_message}----------`);
           }
-        });
-      }
     });
     // Return a '200 OK' response to all requests
 
