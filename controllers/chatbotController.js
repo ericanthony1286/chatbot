@@ -59,13 +59,14 @@ let postWebhook = (req, res) => {
           const commentID = change.value.comment_id;
           const senderID = change.value.sender_id;
           const message = change.value.message;
+          console.log("---------xxxxxxxxx", change.value, "---------xxxxxxxxx");
 
           console.log(`Comment ID: ${commentID}`);
           console.log(`Sender ID: ${senderID}`);
           console.log(`Message: ${message}`);
         }
       });
-      if (entry.messaging[0].message) {
+      if (entry.messaging) {
         webhook_event = entry.messaging[0];
         sender_psid = webhook_event.sender.id;
         handleMessage(sender_psid, webhook_event.message);
