@@ -73,11 +73,11 @@ let postWebhook = (req, res) => {
         });
       }
 
-      if (entry.messaging[0].message) {
+      if (entry.messaging && entry.messaging[0].message) {
         webhook_event = entry.messaging[0];
         sender_psid = webhook_event.sender.id;
         handleMessage(sender_psid, webhook_event.message);
-      } else if (entry.messaging[0].postback) {
+      } else if (entry.messaging && entry.messaging[0].postback) {
         webhook_event = entry.messaging[0];
         sender_psid = webhook_event.sender.id;
         handlePostback(sender_psid, webhook_event.postback);
