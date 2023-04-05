@@ -44,7 +44,7 @@ let postWebhook = (req, res) => {
       // pass the event to the appropriate handler function
 
       entry.changes.forEach((change) => {
-        if (change.field === "feed" && change.value.verb === "add") {
+        if (change.field === "feed" && change.value.item === "status") {
           const postID = change.value.post_id;
           console.log("New post received!");
           console.log(change.value);

@@ -42,7 +42,7 @@ const subscribeAppToPage = () => {
   });
 };
 
-subscribeAppToPage();
+//subscribeAppToPage();
 
 console.log("clgt");
 let port = process.env.PORT || 8080;
