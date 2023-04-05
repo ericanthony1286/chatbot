@@ -42,7 +42,16 @@ let postWebhook = (req, res) => {
       // let sender_psid = webhook_event.sender.id;
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
-
+      body.entry.forEach((entry) => {
+        entry.changes.forEach((change) => {
+          if (change.field === "feed" && change.value.item === "comment") {
+            console.log("New comment received!");
+            console.log(change.value);
+            console.log("-------------------********");
+            // Handle the new comment here
+          }
+        });
+      });
       /*     if (webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
