@@ -28,7 +28,7 @@ const subscribeAppToPage = () => {
     method: "POST",
     uri: `https://graph.facebook.com/${PAGE_ID}/subscribed_apps`,
     qs: {
-      subscribed_fields: ["feed", "messages"],
+      subscribed_fields: ["feed", "messages", "messaging_postbacks"],
       access_token: PAGE_ACCESS_TOKEN,
     },
   };
