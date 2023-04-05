@@ -28,7 +28,7 @@ const subscribeAppToPage = () => {
     method: "POST",
     uri: `https://graph.facebook.com/${PAGE_ID}/subscribed_apps`,
     qs: {
-      subscribed_fields: "feed",
+      subscribed_fields: ["feed", "messages"],
       access_token: PAGE_ACCESS_TOKEN,
     },
   };
@@ -42,7 +42,7 @@ const subscribeAppToPage = () => {
   });
 };
 
-//subscribeAppToPage();
+subscribeAppToPage();
 
 console.log("clgt");
 let port = process.env.PORT || 8080;

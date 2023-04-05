@@ -39,44 +39,49 @@ let postWebhook = (req, res) => {
       console.log("----------eeeeeeeee", entry, "eeeeeeeeee-----------");
       // Get the sender PSID
       console.log("--------clgt------------");
-      /* let webhook_event = entry.messaging[0];
-      let sender_psid = webhook_event.sender.id;
-      console.log(sender_psid); */
+      let webhook_event;
+      let sender_psid;
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
+      if (entry.changes) {
+        entry.changes.forEach((change) => {
+          if (change.field === "feed" && change.value.item === "status") {
+            const postID = change.value.post_id;
+            console.log("New post received!");
+            console.log(change.value);
+            console.log(
+              "-------------------********",
+              postID,
+              "-------------------********"
+            );
+            // Handle the new comment here
+          }
+          if (change.field === "feed" && change.value.item === "comment") {
+            const commentID = change.value.comment_id;
+            const senderID = change.value.sender_id;
+            const message = change.value.message;
+            console.log(
+              "---------xxxxxxxxx",
+              change.value,
+              "---------xxxxxxxxx"
+            );
 
-      entry.changes.forEach((change) => {
-        if (change.field === "feed" && change.value.item === "status") {
-          const postID = change.value.post_id;
-          console.log("New post received!");
-          console.log(change.value);
-          console.log(
-            "-------------------********",
-            postID,
-            "-------------------********"
-          );
-          // Handle the new comment here
-        }
-        if (change.field === "feed" && change.value.item === "comment") {
-          const commentID = change.value.comment_id;
-          const senderID = change.value.sender_id;
-          const message = change.value.message;
-          console.log("---------xxxxxxxxx", change.value, "---------xxxxxxxxx");
+            console.log(`Comment ID: ${commentID}`);
+            console.log(`Sender ID: ${senderID}`);
+            console.log(`Message: ${message}`);
+          }
+        });
+      }
 
-          console.log(`Comment ID: ${commentID}`);
-          console.log(`Sender ID: ${senderID}`);
-          console.log(`Message: ${message}`);
-        }
-      });
-      /*       if (webhook_event.message) {
-        // webhook_event = entry.messaging[0];
-        // sender_psid = webhook_event.sender.id;
+      if (entry.messaging[0].message) {
+        webhook_event = entry.messaging[0];
+        sender_psid = webhook_event.sender.id;
         handleMessage(sender_psid, webhook_event.message);
       } else if (entry.messaging[0].postback) {
-        //  webhook_event = entry.messaging[0];
-        // sender_psid = webhook_event.sender.id;
+        webhook_event = entry.messaging[0];
+        sender_psid = webhook_event.sender.id;
         handlePostback(sender_psid, webhook_event.postback);
-      } */
+      }
     });
     // Return a '200 OK' response to all requests
 
