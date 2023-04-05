@@ -38,33 +38,42 @@ let postWebhook = (req, res) => {
       console.log("----------eeeeeeeee", entry, "eeeeeeeeee-----------");
       // Get the sender PSID
       console.log("--------clgt------------");
-      // let webhook_event = entry.messaging[0];
-      // let sender_psid = webhook_event.sender.id;
+      let webhook_event;
+      let sender_psid;
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
-      body.entry.forEach((entry) => {
-        entry.changes.forEach((change) => {
-          if (change.field === "feed") {
-            const postID = change.value.post_id;
-            console.log("New post received!");
-            console.log(change.value);
-            console.log(
-              "-------------------********",
-              postID,
-              "-------------------********"
-            );
-            // Handle the new comment here
-          }
-        });
+
+      entry.changes.forEach((change) => {
+        if (change.field === "feed" && change.value.verb === "add") {
+          const postID = change.value.post_id;
+          console.log("New post received!");
+          console.log(change.value);
+          console.log(
+            "-------------------********",
+            postID,
+            "-------------------********"
+          );
+          // Handle the new comment here
+        }
+        if (change.field === "feed" && change.value.item === "comment") {
+          const commentID = change.value.comment_id;
+          const senderID = change.value.sender_id;
+          const message = change.value.message;
+
+          console.log(`Comment ID: ${commentID}`);
+          console.log(`Sender ID: ${senderID}`);
+          console.log(`Message: ${message}`);
+        }
       });
-      /*     if (webhook_event.message) {
+      if (entry.messaging[0].message) {
+        webhook_event = entry.messaging[0];
+        sender_psid = webhook_event.sender.id;
         handleMessage(sender_psid, webhook_event.message);
-      } else if (webhook_event.postback) {
+      } else if (entry.messaging[0].postback) {
+        webhook_event = entry.messaging[0];
+        sender_psid = webhook_event.sender.id;
         handlePostback(sender_psid, webhook_event.postback);
-      } else if (entry.changes) {
-        console.log("vvvvvvvvvvv---------");
-        entry.changes.forEach((change) => console.log(change.value));
-      } */
+      }
     });
     // Return a '200 OK' response to all requests
 
