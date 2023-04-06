@@ -161,6 +161,17 @@ async function handlePostback(sender_psid, received_postback) {
       await chatbotService.handleSendMainMenu(sender_psid);
 
       break;
+    case "LUNCH_MENU":
+      await chatbotService.handleSendLuchMenu(sender_psid);
+
+      break;
+    case "DINNER_MENU":
+      await chatbotService.handleSendDinnerMenu(sender_psid);
+
+      break;
+    case "VIEW_APPETIZERS":
+    case "VIEW_FISH":
+    case "VIEW_MEAT":
     default:
       response = { text: "nhu shit" };
   }
