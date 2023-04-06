@@ -645,4 +645,5 @@ module.exports = {
   handleDetailViewFish: handleDetailViewFish,
   handleDetailViewMeat: handleDetailViewMeat,
   handleShowDetailRooms: handleShowDetailRooms,
+  callSendAPI: callSendAPI,
 };

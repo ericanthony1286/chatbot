@@ -299,6 +299,36 @@ let setupPersistentMenu = async (req, res) => {
 let handleReserveTable = (req, res) => {
   res.render("reserve-table");
 };
+
+let handlePostReserveTable = async (req, res) => {
+  try {
+    let customerName = "";
+    if (req.body.customerName === "") {
+      customerName = "Empty";
+    } else customerName = req.body.customerName;
+
+    // I demo response with sample text
+    // you can check database for customer order's status
+
+    let response1 = {
+      text: `---Thong tin khach hang dat ban---
+        \nHo va ten: ${customerName}
+        \nEmail: ${req.body.email}
+        \nSDT: ${req.body.phoneNumber}
+        `,
+    };
+
+    await chatbotService.callSendAPI(req.body.psid, response1);
+
+    return res.status(200).json({
+      message: "ok",
+    });
+  } catch (e) {
+    return res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
 module.exports = {
   getHomePage: getHomePage,
   getWebhook: getWebhook,
@@ -306,4 +336,5 @@ module.exports = {
   setupProfile: setupProfile,
   setupPersistentMenu: setupPersistentMenu,
   handleReserveTable: handleReserveTable,
+  handlePostReserveTable: handlePostReserveTable,
 };
