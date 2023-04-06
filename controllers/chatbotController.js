@@ -172,6 +172,7 @@ async function handlePostback(sender_psid, received_postback) {
     case "VIEW_APPETIZERS":
     case "VIEW_FISH":
     case "VIEW_MEAT":
+    case "IMAGE_BACK_MAIN_MENU":
     default:
       response = { text: "nhu shit" };
   }
