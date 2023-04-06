@@ -170,9 +170,17 @@ async function handlePostback(sender_psid, received_postback) {
 
       break;
     case "VIEW_APPETIZERS":
+      await chatbotService.handleDetailViewAppetizer(sender_psid);
+      break;
     case "VIEW_FISH":
+      await chatbotService.handleDetailViewFish(sender_psid);
+      break;
     case "VIEW_MEAT":
+      await chatbotService.handleDetailViewMeat(sender_psid);
+      break;
     case "IMAGE_BACK_MAIN_MENU":
+      await chatbotService.handleBackToMainMenu(sender_psid);
+      break;
     default:
       response = { text: "nhu shit" };
   }
