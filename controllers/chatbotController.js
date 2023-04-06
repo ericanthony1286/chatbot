@@ -178,7 +178,7 @@ async function handlePostback(sender_psid, received_postback) {
     case "VIEW_MEAT":
       await chatbotService.handleDetailViewMeat(sender_psid);
       break;
-    case "IMAGE_BACK_MAIN_MENU":
+    case "BACK_TO_MAIN_MENU":
       await chatbotService.handleBackToMainMenu(sender_psid);
       break;
     default:

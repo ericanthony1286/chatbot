@@ -18,14 +18,14 @@ const IMAGE_DETAIl_APPETIZER_2 = "http://bit.ly/eric-bot-10";
 const IMAGE_DETAIl_APPETIZER_3 = "http://bit.ly/eric-bot-11";
 ///////////
 const IMAGE_DETAIl_FISH_1 = "http://bit.ly/eric-bot-12";
-const IMAGE_DETAIl_FISH_2 = "http://bit.ly/eric-bot-13";
+const IMAGE_DETAIl_FISH_2 = "http://bit.ly/eric-bot-13-1";
 const IMAGE_DETAIl_FISH_3 = "http://bit.ly/eric-bot-14";
 ///////////
 const IMAGE_DETAIl_MEAT_1 = "http://bit.ly/eric-bot-15";
 const IMAGE_DETAIl_MEAT_2 = "http://bit.ly/eric-bot-16";
 const IMAGE_DETAIl_MEAT_3 = "http://bit.ly/eric-bot-17";
 
-let callSendAPI = (sender_psid, response) => {
+let callSendAPI = async (sender_psid, response) => {
   // Construct the message body
   let request_body = {
     recipient: {
@@ -34,6 +34,8 @@ let callSendAPI = (sender_psid, response) => {
     message: response,
   };
 
+  await sendMarkReadMessage(sender_psid);
+  await sendTypingOn(sender_psid);
   // Send the HTTP request to the Messenger Platform
   request(
     {
@@ -53,6 +55,59 @@ let callSendAPI = (sender_psid, response) => {
   );
 };
 
+let sendTypingOn = (sender_psid) => {
+  let request_body = {
+    recipient: {
+      id: sender_psid,
+    },
+    sender_action: "typing_on",
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  request(
+    {
+      uri: "https://graph.facebook.com/v16.0/me/messages",
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      console.log("clgt-----------2");
+      if (!err) {
+        console.log("sendTypingOn sent!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+};
+
+let sendMarkReadMessage = (sender_psid) => {
+  let request_body = {
+    recipient: {
+      id: sender_psid,
+    },
+    sender_action: "mark_seen",
+  };
+
+  // Send the HTTP request to the Messenger Platform
+  request(
+    {
+      uri: "https://graph.facebook.com/v16.0/me/messages",
+      qs: { access_token: PAGE_ACCESS_TOKEN },
+      method: "POST",
+      json: request_body,
+    },
+    (err, res, body) => {
+      console.log("clgt-----------2");
+      if (!err) {
+        console.log("sendTypingOn sent!");
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }
+  );
+};
 let getUsername = (sender_psid) => {
   return new Promise((resolve, reject) => {
     request(
