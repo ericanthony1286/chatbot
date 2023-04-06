@@ -72,15 +72,6 @@ let postWebhook = (req, res) => {
         });
       }
 
-      /*  if (entry.messaging && entry.messaging[0].message) {
-        webhook_event = entry.messaging[0];
-        sender_psid = webhook_event.sender.id;
-        handleMessage(sender_psid, webhook_event.message);
-      } else if (entry.messaging && entry.messaging[0].postback) {
-        webhook_event = entry.messaging[0];
-        sender_psid = webhook_event.sender.id;
-        handlePostback(sender_psid, webhook_event.postback);
-      } */
       if (entry.messaging) {
         let webhook_event = entry.messaging[0];
         let sender_psid = webhook_event.sender.id;
@@ -111,7 +102,6 @@ function handleMessage(sender_psid, received_message) {
     response = {
       text: `You sent the message: "${received_message.text}". Now send me an attachment!`,
     };
-    console.log("clgt 1-------------");
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
@@ -165,6 +155,10 @@ async function handlePostback(sender_psid, received_postback) {
     case "RESTART_BOT":
     case "GET_STARTED":
       await chatbotService.handleGetStarted(sender_psid);
+
+      break;
+    case "MAIN_MENU":
+      await chatbotService.handleSendMainMenu(sender_psid);
 
       break;
     default:

@@ -61,7 +61,7 @@ let handleGetStarted = (sender_psid) => {
       let username = await getUsername(sender_psid);
       let response1 = { text: `Ok, Welcome ${username} to our page.` };
 
-      let response2 = sendGetStartedTemplate();
+      let response2 = getStartedTemplate();
 
       // send text message
       await callSendAPI(sender_psid, response1);
@@ -74,7 +74,7 @@ let handleGetStarted = (sender_psid) => {
   });
 };
 
-let sendGetStartedTemplate = () => {
+let getStartedTemplate = () => {
   let response = {
     attachment: {
       type: "template",
@@ -109,6 +109,78 @@ let sendGetStartedTemplate = () => {
   };
   return response;
 };
+
+let handleSendMainMenu = (sender_psid) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response1 = getMainMenuTemplate();
+
+      // send text message
+      await callSendAPI(sender_psid, response1);
+      // send generic template message
+      await callSendAPI(sender_psid, response2);
+      resolve("done");
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+let getMainMenuTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements: [
+          {
+            title: "Menu cua nha hang",
+            subtitle:
+              "Chung toi han hanh mang den cho ban thuc don phong phu cho bua trua va bua toi.",
+            image_url: IMAGE_GET_STARTED,
+            buttons: [
+              {
+                type: "postback",
+                title: "BUA TRUA",
+                payload: "LUNCH_MENU",
+              },
+              {
+                type: "postback",
+                title: "BUA TOI",
+                payload: "DINNER_MENU",
+              },
+            ],
+          },
+          {
+            title: "Gio mo cua",
+            subtitle: "T2-T6 10AM - 11PM | T7-CN 5PM - 10PM",
+            image_url: IMAGE_GET_STARTED,
+            buttons: [
+              {
+                type: "postback",
+                title: "DAT BAN",
+                payload: "RESERVED_TABLE",
+              },
+            ],
+          },
+          {
+            title: "Khong gian nha hang",
+            subtitle: "Nha hang co suc chua len den 300 cho ngoi.",
+            image_url: IMAGE_GET_STARTED,
+            buttons: [
+              {
+                type: "postback",
+                title: "Chi tiet",
+                payload: "SHOW_ROOMS",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  return response;
+};
 module.exports = {
   handleGetStarted: handleGetStarted,
+  handleSendMainMenu: handleSendMainMenu,
 };
