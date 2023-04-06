@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -7,7 +8,6 @@ const initWebRoutes = require("./routes/web");
 require("dotenv").config();
 
 const app = express();
-
 // config view engine
 
 configViewEngine(app);
@@ -16,6 +16,7 @@ configViewEngine(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(cors());
 
 // init web routes
 initWebRoutes(app);
@@ -44,7 +45,6 @@ const subscribeAppToPage = () => {
 
 subscribeAppToPage();
 
-console.log("clgt");
 let port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log("server is running ");

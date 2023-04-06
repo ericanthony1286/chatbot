@@ -53,8 +53,10 @@ function validateInputFields() {
 }
 
 function handleClickButtonReserveTable() {
+  console.log("nhu los");
   $("#btnReserveTable").on("click", function (e) {
     let check = validateInputFields(); //return true or false
+    console.log("aaaaaaaaaaaaa");
 
     let data = {
       psid: $("#psid").val(),
@@ -91,3 +93,5 @@ function handleClickButtonReserveTable() {
     }
   });
 }
+
+console.log("clgt");
