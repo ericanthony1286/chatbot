@@ -181,6 +181,9 @@ async function handlePostback(sender_psid, received_postback) {
     case "BACK_TO_MAIN_MENU":
       await chatbotService.handleBackToMainMenu(sender_psid);
       break;
+    case "SHOW_ROOMS":
+      await chatbotService.handleShowDetailRooms(sender_psid);
+      break;
     default:
       response = { text: "nhu shit" };
   }
@@ -292,10 +295,15 @@ let setupPersistentMenu = async (req, res) => {
   );
   return res.send("Setup user persistent menu succeeds!");
 };
+
+let handleReserveTable = (req, res) => {
+  res.render("reserve-table");
+};
 module.exports = {
   getHomePage: getHomePage,
   getWebhook: getWebhook,
   postWebhook: postWebhook,
   setupProfile: setupProfile,
   setupPersistentMenu: setupPersistentMenu,
+  handleReserveTable: handleReserveTable,
 };

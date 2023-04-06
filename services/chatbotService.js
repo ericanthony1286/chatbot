@@ -25,6 +25,8 @@ const IMAGE_DETAIl_MEAT_1 = "http://bit.ly/eric-bot-15";
 const IMAGE_DETAIl_MEAT_2 = "http://bit.ly/eric-bot-16";
 const IMAGE_DETAIl_MEAT_3 = "http://bit.ly/eric-bot-17";
 
+////
+const IMAGE_DETAIL_ROOMS = "http://bit.ly/eric-bot-18";
 let callSendAPI = async (sender_psid, response) => {
   // Construct the message body
   let request_body = {
@@ -167,9 +169,11 @@ let getStartedTemplate = () => {
                 payload: "MAIN_MENU",
               },
               {
-                type: "postback",
+                type: "web_url",
+                url: `${process.env.URL_WEB_SERVICE_ORDER}`,
                 title: "DAT BAN",
-                payload: "RESERVED_TABLE",
+                webview_height_ratio: "tall",
+                messenger_extensions: true, // false: open webview in new tab
               },
               {
                 type: "postback",
@@ -230,9 +234,11 @@ let getMainMenuTemplate = () => {
             image_url: IMAGE_MAIN_MENU_3,
             buttons: [
               {
-                type: "postback",
+                type: "web_url",
+                url: `${process.env.URL_WEB_SERVICE_ORDER}`,
                 title: "DAT BAN",
-                payload: "RESERVED_TABLE",
+                webview_height_ratio: "tall",
+                messenger_extensions: true, // false: open webview in new tab
               },
             ],
           },
@@ -572,6 +578,63 @@ let getDetailViewMeatTemplate = () => {
   };
   return response;
 };
+
+let getImageRoomsTemplate = () => {
+  let response = {
+    attachment: {
+      type: "image",
+      payload: {
+        url: IMAGE_DETAIL_ROOMS,
+        is_reusable: true,
+      },
+    },
+  };
+  return response;
+};
+let getButtonRoomsTemplate = () => {
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "button",
+        text: "Nha hang co the phuc vu toi da 300 khack",
+        buttons: [
+          {
+            type: "postback",
+            title: "Menu chinh",
+            payload: "MAIN_MENU",
+          },
+          {
+            type: "web_url",
+            url: `${process.env.URL_WEB_SERVICE_ORDER}`,
+            title: "DAT BAN",
+            webview_height_ratio: "tall",
+            messenger_extensions: true, // false: open webview in new tab
+          },
+        ],
+      },
+    },
+  };
+  return response;
+};
+let handleShowDetailRooms = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // send an image
+
+      let response1 = getImageRoomsTemplate();
+
+      // send a button templates: text, buttons
+      let response2 = getButtonRoomsTemplate();
+      await callSendAPI(sender_psid, response1);
+      await callSendAPI(sender_psid, response2);
+      // send generic template message
+      resolve("done");
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
 module.exports = {
   handleGetStarted: handleGetStarted,
   handleSendMainMenu: handleSendMainMenu,
@@ -581,4 +644,5 @@ module.exports = {
   handleDetailViewAppetizer: handleDetailViewAppetizer,
   handleDetailViewFish: handleDetailViewFish,
   handleDetailViewMeat: handleDetailViewMeat,
+  handleShowDetailRooms: handleShowDetailRooms,
 };
