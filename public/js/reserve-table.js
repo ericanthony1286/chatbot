@@ -64,6 +64,7 @@ function handleClickButtonReserveTable() {
     };
 
     if (!check) {
+      console.log("------------co chay ko--------------");
       //close webview
       MessengerExtensions.requestCloseBrowser(
         function success() {

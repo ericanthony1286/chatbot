@@ -317,13 +317,14 @@ let handlePostReserveTable = async (req, res) => {
         \nSDT: ${req.body.phoneNumber}
         `,
     };
-
+    console.log("-----------chay di--------------");
     await chatbotService.callSendAPI(req.body.psid, response1);
 
     return res.status(200).json({
       message: "ok",
     });
   } catch (e) {
+    console.log("----------Loi post reserve table---------");
     return res.status(500).json({
       message: "Server error",
     });
