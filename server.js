@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const configViewEngine = require("./config/viewEngine");
 const initWebRoutes = require("./routes/web");
+const socket = require("socket.io");
 require("dotenv").config();
 
 const app = express();
@@ -46,6 +47,18 @@ const subscribeAppToPage = () => {
 subscribeAppToPage();
 
 let port = process.env.PORT || 8080;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log("server is running ");
+});
+
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+io.on("connection", (socket) => {
+  console.log(socket.id);
+  socket.on("disconnect", () => {
+    console.log("User disconnected: ", socket.id);
+  });
 });
