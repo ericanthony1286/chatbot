@@ -1,8 +1,11 @@
 require("dotenv").config();
+const io = require("../server");
 const request = require("request");
 const chatbotService = require("../services/chatbotService");
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+
+///////
 let getHomePage = (req, res) => {
   return res.render("homepage");
 };
@@ -54,6 +57,7 @@ let postWebhook = (req, res) => {
               "-------------------********"
             );
             // Handle the new comment here
+            io.emit("message", change.value.message);
           }
           if (change.field === "feed" && change.value.item === "comment") {
             const commentID = change.value.comment_id;
@@ -64,7 +68,13 @@ let postWebhook = (req, res) => {
               change.value,
               "---------xxxxxxxxx"
             );
-
+            /*    io.on("connection", (socket) => {
+              console.log(socket.id);
+              socket.emit("send_comment", change.value);
+              socket.on("disconnect", () => {
+                console.log("User disconnected: ", socket.id);
+              });
+            }); */
             console.log(`Comment ID: ${commentID}`);
             console.log(`Sender ID: ${senderID}`);
             console.log(`Message: ${message}`);
@@ -78,6 +88,13 @@ let postWebhook = (req, res) => {
         console.log(webhook_event, "kkkkkkkkkkkkkkk");
         if (webhook_event.message) {
           handleMessage(sender_psid, webhook_event.message);
+          /*  io.on("connection", (socket) => {
+            console.log(socket.id);
+            socket.emit("send_message", webhook_event.message);
+            socket.on("disconnect", () => {
+              console.log("User disconnected: ", socket.id);
+            });
+          }); */
         } else if (webhook_event.postback) {
           handlePostback(sender_psid, webhook_event.postback);
         }

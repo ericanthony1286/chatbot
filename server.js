@@ -56,9 +56,5 @@ const io = socket(server, {
     origin: "http://localhost:3000",
   },
 });
-io.on("connection", (socket) => {
-  console.log(socket.id);
-  socket.on("disconnect", () => {
-    console.log("User disconnected: ", socket.id);
-  });
-});
+
+module.exports = io;
