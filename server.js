@@ -50,15 +50,10 @@ let port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
   console.log("server is running ");
 });
-
-const io = socket(server, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+const io = require("./socket-io").init(server);
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
-  socket.emit("message", "an lon ko");
+
   socket.on("join_room", (data) => {
     socket.join(data);
     console.log(`User with ID: ${socket.id} joined room: ${data}`);
