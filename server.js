@@ -50,6 +50,12 @@ let port = process.env.PORT || 8080;
 const server = app.listen(port, () => {
   console.log("server is running ");
 });
+
+/* const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+}); */
 const io = require("./socket-io").init(server);
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
@@ -67,5 +73,3 @@ io.on("connection", (socket) => {
     console.log("User Disconnected", socket.id);
   });
 });
-
-//module.exports = io;
