@@ -97,7 +97,7 @@ let postWebhook = (req, res) => {
         if (webhook_event.message) {
           handleMessage(sender_psid, webhook_event.message);
           //  io.emit("message", { sender_psid, message: webhook_event.message });
-          io.on("connection", (socket) => {
+          io.sockets.on("connection", (socket) => {
             console.log(socket.id);
             socket.emit("message", webhook_event.message);
             socket.on("disconnect", () => {
