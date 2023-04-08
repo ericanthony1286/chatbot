@@ -56,7 +56,7 @@ const io = socket(server, {
     origin: "http://localhost:3000",
   },
 });
-io.on("connection", (socket) => {
+/* io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
   socket.emit("message", "an lon ko");
   socket.on("join_room", (data) => {
@@ -71,5 +71,5 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
-});
-//module.exports = server;
+}); */
+module.exports = io;

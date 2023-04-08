@@ -5,7 +5,7 @@ const request = require("request");
 const chatbotService = require("../services/chatbotService");
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-
+const io = require("../server");
 /* const io = socket(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -97,13 +97,13 @@ let postWebhook = (req, res) => {
         if (webhook_event.message) {
           handleMessage(sender_psid, webhook_event.message);
           //  io.emit("message", { sender_psid, message: webhook_event.message });
-          /*  io.on("connection", (socket) => {
+          io.on("connection", (socket) => {
             console.log(socket.id);
-            socket.emit("send_message", webhook_event.message);
+            socket.emit("message", webhook_event.message);
             socket.on("disconnect", () => {
               console.log("User disconnected: ", socket.id);
             });
-          }); */
+          });
         } else if (webhook_event.postback) {
           handlePostback(sender_psid, webhook_event.postback);
         }
