@@ -6,7 +6,7 @@ const request = require("request");
 const chatbotService = require("../services/chatbotService");
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
-//const io = require("../server");
+const io = require("../server");
 /* const io = socket(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -97,10 +97,10 @@ let postWebhook = (req, res) => {
         console.log(webhook_event, "kkkkkkkkkkkkkkk");
         if (webhook_event.message) {
           handleMessage(sender_psid, webhook_event.message);
-          /*       io.getIO().emit("message", {
+          io.getIO().emit("message", {
             sender_psid,
             message: webhook_event.message,
-          }); */
+          });
           //  io.emit("message", { sender_psid, message: webhook_event.message });
           /* io.on("connection", (socket) => {
             console.log(socket.id);

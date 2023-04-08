@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const request = require("request");
 const configViewEngine = require("./config/viewEngine");
 const initWebRoutes = require("./routes/web");
-const socket = require("socket.io");
+
 require("dotenv").config();
 
 const app = express();
@@ -56,12 +56,12 @@ const server = app.listen(port, () => {
     origin: "http://localhost:3000",
   },
 }); */
-//const io = require("./socket-io").init(server);
-const io = require("socket.io")(server, {
+const io = require("./socket-io").init(server);
+/* const io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:3000",
   },
-});
+}); */
 io.on("connection", (socket) => {
   console.log(`User Connected`);
 
