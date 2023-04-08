@@ -57,7 +57,11 @@ const server = app.listen(port, () => {
   },
 }); */
 //const io = require("./socket-io").init(server);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
 io.on("connection", (socket) => {
   console.log(`User Connected`);
 
