@@ -51,7 +51,7 @@ const server = app.listen(port, () => {
   console.log("server is running ");
 });
 
-const io = socket(server, {
+/* const io = socket(server, {
   cors: {
     origin: "http://localhost:3000",
   },
@@ -71,5 +71,5 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
-});
-//module.exports = io;
+}); */
+module.exports = server;
