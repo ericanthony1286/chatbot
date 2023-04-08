@@ -56,9 +56,10 @@ const server = app.listen(port, () => {
     origin: "http://localhost:3000",
   },
 }); */
-const io = require("./socket-io").init(server);
+//const io = require("./socket-io").init(server);
+const io = require("./socket-io")(server);
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+  console.log(`User Connected`);
 
   socket.on("join_room", (data) => {
     socket.join(data);

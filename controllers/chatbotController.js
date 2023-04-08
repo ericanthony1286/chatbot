@@ -1,7 +1,7 @@
 require("dotenv").config();
 //const server = require("../server");
 //const socket = require("socket.io");
-const io = require("../socket-io");
+//const io = require("../socket-io");
 const request = require("request");
 const chatbotService = require("../services/chatbotService");
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -97,10 +97,10 @@ let postWebhook = (req, res) => {
         console.log(webhook_event, "kkkkkkkkkkkkkkk");
         if (webhook_event.message) {
           handleMessage(sender_psid, webhook_event.message);
-          io.getIO().emit("message", {
+          /*       io.getIO().emit("message", {
             sender_psid,
             message: webhook_event.message,
-          });
+          }); */
           //  io.emit("message", { sender_psid, message: webhook_event.message });
           /* io.on("connection", (socket) => {
             console.log(socket.id);
