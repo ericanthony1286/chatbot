@@ -51,14 +51,14 @@ const server = app.listen(port, () => {
   console.log("server is running ");
 });
 
-/* const io = socket(server, {
+const io = socket(server, {
   cors: {
     origin: "http://localhost:3000",
   },
 });
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
-
+  socket.emit("message", "an lon ko");
   socket.on("join_room", (data) => {
     socket.join(data);
     console.log(`User with ID: ${socket.id} joined room: ${data}`);
@@ -71,5 +71,5 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
-}); */
-module.exports = server;
+});
+//module.exports = server;
