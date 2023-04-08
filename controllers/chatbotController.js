@@ -57,7 +57,7 @@ let postWebhook = (req, res) => {
               "-------------------********"
             );
             // Handle the new comment here
-            io.emit("message", change.value.message);
+            // io.emit("message", change.value.message);
           }
           if (change.field === "feed" && change.value.item === "comment") {
             const commentID = change.value.comment_id;
