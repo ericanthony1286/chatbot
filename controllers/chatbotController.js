@@ -1,5 +1,5 @@
 require("dotenv").config();
-const io = require("../server");
+//const io = require("../server");
 const request = require("request");
 const chatbotService = require("../services/chatbotService");
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
