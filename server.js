@@ -57,7 +57,7 @@ const server = app.listen(port, () => {
   },
 }); */
 //const io = require("./socket-io").init(server);
-const io = require("./socket-io")(server);
+const io = require("socket.io")(server);
 io.on("connection", (socket) => {
   console.log(`User Connected`);
 
