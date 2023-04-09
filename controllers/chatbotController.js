@@ -93,7 +93,7 @@ let postWebhook = (req, res) => {
           }); */
           io.getIO().on("connection", (socket) => {
             console.log(`User Connected`);
-            socket.on("receive_message", (data) => {
+            socket.on("receive_message", (message) => {
               console.log("%%%%%%%%%%%%%%%%%%: ", message);
               handleMessage(sender_psid, message);
             });
