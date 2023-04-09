@@ -85,6 +85,9 @@ let postWebhook = (req, res) => {
             sender_psid,
             message: webhook_event.message,
           });
+          io.getIO().on("receive_message", (message) => {
+            handleMessage(sender_psid, message);
+          });
         } else if (webhook_event.postback) {
           handlePostback(sender_psid, webhook_event.postback);
         }
