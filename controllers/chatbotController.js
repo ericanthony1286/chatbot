@@ -85,14 +85,9 @@ let postWebhook = (req, res) => {
             sender_psid,
             message: webhook_event.message,
           });
-          console.log("11111111111111", io);
-          console.log("22222222222", io.getIO());
-          /*   io.getIO().on("receive_message", (message) => {
-            console.log("%%%%%%%%%%%%%%%%%%: ", message);
-            handleMessage(sender_psid, message);
-          }); */
+
           io.getIO().on("connection", (socket) => {
-            console.log(`User Connected`);
+            console.log(`-----------User Connected------------`);
             socket.on("receive_message", (message) => {
               console.log("%%%%%%%%%%%%%%%%%%: ", message);
               handleMessage(sender_psid, message);
@@ -118,13 +113,13 @@ let postWebhook = (req, res) => {
 
 function handleMessage(sender_psid, received_message) {
   let response;
-
+  console.log("(((((((((((", received_message, ")))))))))))))))");
   // Checks if the message contains text
-  if (received_message.text) {
+  if (received_message) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     response = {
-      text: `You sent the message: "${received_message.text}". Now send me an attachment!`,
+      text: received_message,
     };
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
