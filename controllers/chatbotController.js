@@ -80,7 +80,6 @@ let postWebhook = (req, res) => {
         let sender_psid = webhook_event.sender.id;
         console.log(webhook_event, "kkkkkkkkkkkkkkk");
         if (webhook_event.message) {
-          // handleMessage(sender_psid, webhook_event.message);
           io.getIO().emit("message", {
             sender_psid,
             message: webhook_event.message,
