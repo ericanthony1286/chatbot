@@ -87,9 +87,20 @@ let postWebhook = (req, res) => {
           });
           console.log("11111111111111", io);
           console.log("22222222222", io.getIO());
-          io.getIO().on("receive_message", (message) => {
+          /*   io.getIO().on("receive_message", (message) => {
             console.log("%%%%%%%%%%%%%%%%%%: ", message);
             handleMessage(sender_psid, message);
+          }); */
+          io.getIO().on("connection", (socket) => {
+            console.log(`User Connected`);
+            socket.on("receive_message", (data) => {
+              console.log("%%%%%%%%%%%%%%%%%%: ", message);
+              handleMessage(sender_psid, message);
+            });
+
+            socket.on("disconnect", () => {
+              console.log("User Disconnected", socket.id);
+            });
           });
         } else if (webhook_event.postback) {
           handlePostback(sender_psid, webhook_event.postback);
