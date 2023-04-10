@@ -91,22 +91,14 @@ let postWebhook = (req, res) => {
               console.log("%%%%%%%%%%%%%%%%%%: ", message);
               handleMessage(sender_psid, message);
             }); */
-       /*      let receiveMessageListeners = io
-              .getIO()
-              .listeners("receive_message").length;
-            if (receiveMessageListeners <= 1) {
-              io.getIO().on("receive_message", (message) => {
-                console.log("%%%%%%%%%%%%%%%%%%: ", message);
-                handleMessage(sender_psid, message);
-              });
-            } */
+     
             function receiveMessageHandler(message) {
               console.log("%%%%%%%%%%%%%%%%%%: ", message);
               handleMessage(sender_psid, message);
-              io.getIO().removeListener("receive_message", receiveMessageHandler);
+              socket.removeListener("receive_message", receiveMessageHandler);
             }
           
-            io.getIO().on("receive_message", receiveMessageHandler);
+            socket.on("receive_message", receiveMessageHandler);
 
             socket.on("disconnect", () => {
               console.log("User Disconnected", socket.id);
