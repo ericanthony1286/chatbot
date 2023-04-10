@@ -53,10 +53,10 @@ const server = app.listen(port, () => {
 
 const io = require("./socket-io").init(server);
 
-/* io.on("connection", (socket) => {
+io.on("connection", (socket) => {
   console.log(`User Connected`);
 
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
-}); */
+});
