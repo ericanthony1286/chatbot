@@ -91,6 +91,7 @@ let postWebhook = (req, res) => {
               console.log("%%%%%%%%%%%%%%%%%%: ", message);
               handleMessage(sender_psid, message);
             });
+            socket.off("receive_message");
 
             socket.on("disconnect", () => {
               console.log("User Disconnected", socket.id);
