@@ -91,12 +91,12 @@ let postWebhook = (req, res) => {
               console.log("%%%%%%%%%%%%%%%%%%: ", message);
               handleMessage(sender_psid, message);
             });
-            socket.off("receive_message");
 
             socket.on("disconnect", () => {
               console.log("User Disconnected", socket.id);
             });
           });
+          io.getIO().off("receive_message");
         } else if (webhook_event.postback) {
           handlePostback(sender_psid, webhook_event.postback);
         }
