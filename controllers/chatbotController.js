@@ -96,7 +96,7 @@ let postWebhook = (req, res) => {
               console.log("User Disconnected", socket.id);
             });
           });
-          io.getIO().off("receive_message");
+          //  io.getIO().off("receive_message");
         } else if (webhook_event.postback) {
           handlePostback(sender_psid, webhook_event.postback);
         }
