@@ -87,18 +87,10 @@ let postWebhook = (req, res) => {
 
           io.getIO().on("connection", (socket) => {
             console.log(`-----------User Connected------------`);
-            /*    socket.on("receive_message", (message) => {
+            socket.on("receive_message", (message) => {
               console.log("%%%%%%%%%%%%%%%%%%: ", message);
               handleMessage(sender_psid, message);
-            }); */
-     
-            function receiveMessageHandler(message) {
-              console.log("%%%%%%%%%%%%%%%%%%: ", message);
-              handleMessage(sender_psid, message);
-            }
-            socket.on("receive_message", receiveMessageHandler);
-            
-            socket.removeListener("receive_message", receiveMessageHandler);
+            });
 
             socket.on("disconnect", () => {
               console.log("User Disconnected", socket.id);
